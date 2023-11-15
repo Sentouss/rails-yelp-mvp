@@ -1,0 +1,32 @@
+<div class="container mt-5">
+
+<!-- Restaurant details -->
+  <h1><%= @restaurant.name %></h1>
+  <ul>
+    <li>Category: <%= @restaurant.category %></li>
+    <li>Address: <%= @restaurant.address %></li>
+    <li>Phone Number: <%= @restaurant.phone_number %></li>
+  </ul>
+
+<!-- Add a Review -->
+    <h2>Add a Review:</h2>
+      <%= simple_form_for [@restaurant, @review] do |f| %>
+        <%= f.input :content %>
+        <%= f.input :rating %>
+        <%= f.submit "Submit review", class: "btn btn-primary" %>
+      <% end %>
+
+<!-- Display Reviews -->
+  <p><strong>Reviews</strong></p>
+  <ul class="list-group">
+    <% @restaurant.reviews.each do |review| %>
+      <li class="list-group-item"><%= review.content %></li>
+      <li class="list-group-item">Rating:<%= review.rating %>/5</li>
+    <% end %>
+  </ul>
+  <br>
+
+  <%= link_to "Delete #{@restaurant.name}", restaurant_path(@restaurant), data: { turbo_method: :delete, turbo_confirm: "Are your sure?" } %>
+  <br>
+  <%= link_to "Back to all restaurants", restaurants_path %>
+</div>
